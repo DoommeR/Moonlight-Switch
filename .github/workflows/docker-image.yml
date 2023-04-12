@@ -16,6 +16,7 @@ jobs:
       image: docker://xitrix/moonlight:latest
 
     steps:
+    
     - name: Check out repository
       uses: actions/checkout@v1
       with:
@@ -23,7 +24,11 @@ jobs:
 
     - name: Remove useless fonts
       run: rm -rf ./resources/font
-
+      
+    - name: Build image
+      run: |
+        docker build -t moonlight-switch -f ./scripts/switch.dockerfile ./scripts || exit 1
+        
     - name: Run build
       run: make -j8
 
